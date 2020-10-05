@@ -71,7 +71,7 @@ peg_start = 0
 
 #for a in range(len(index)):
 try:
-	for a in range(len(index)):
+	for a in range(505, len(index)):
 		
 		#print(str(index[a]))
 		ind_zack = 'https://www.zacks.com/stock/quote/'+str(index[a])

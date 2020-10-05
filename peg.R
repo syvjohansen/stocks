@@ -5,13 +5,14 @@ peg <- read_excel("~/stocks/scrapes/peg.xlsx",
 peg <- data.frame(peg)
 colnames(peg) <- c("Stock", "Sector", "Subsector", "Peg")
 peg <- na.omit(peg)
+peg$Peg <- as.double(sub(",","", peg$Peg, fixed=TRUE))
 peg[which(as.double(peg$Peg) < 1 ), ]
 
+
+
+peg$Sector[which(peg$Sector=="Communication Services\r\n")] = "Communication Services"
 sectors = unique(peg$Sector)
 subsectors = unique(peg$Subsector)
-
-which(peg$Sector=="Communication Services\r\n")
-
 mean(as.double((subset(peg, Sector=="Industrials"))$Peg))
 secpeg = rep(0, length(sectors))
 for(a in 1:length(sectors)){
@@ -28,5 +29,9 @@ for(a in 1:length(subsectors)){
 }
 subsec_df = cbind(subsectors, subsecpeg)
 
-peg[which(peg$Sector=="Health Care"), ]
-
+sec_df
+HC = peg[which(peg$Sector=="Health Care"), ]
+IT = (peg[(which(peg$Sector=="Information Technology")), ])
+IT[order(IT$Peg), ]
+HC[order(HC$Peg), ]
+peg[which(as.double(peg$Peg) < 1 ), ]
