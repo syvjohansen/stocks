@@ -71,7 +71,7 @@ peg_start = 0
 
 #for a in range(len(index)):
 try:
-	for a in range(505, len(index)):
+	for a in range(0, len(index)):
 		
 		#print(str(index[a]))
 		ind_zack = 'https://www.zacks.com/stock/quote/'+str(index[a])
@@ -80,12 +80,12 @@ try:
 			the_page = response.read()
 		#print(the_page)
 		zack_soup = BeautifulSoup(the_page, 'html.parser')
-		zack_sect = zack_soup.find_all("section", {"id": "stock_key_earnings"})
-		zack_sect = zack_sect[0]
-		zack_td = zack_sect.find_all("td")
-		if(zack_td[-2].get_text() == "PEG Ratio"):
-			peg.append(zack_td[-1].get_text())
-		else:
+		zack_peg = zack_soup.find_all("dd")
+		zack_peg = zack_peg[17]
+		try:
+			zack_peg = zack_peg.get_text()
+			peg.append(float(zack_peg))
+		except:
 			peg.append("NA")
 		sheet.write(a, 0, index[a])
 		sheet.write(a, 1, sector[a])
